@@ -1,0 +1,70 @@
+header {
+  padding: 20px 0; }
+  header .cabecalho {
+    display: flex;
+    align-items: center; }
+    header .cabecalho figure {
+      margin: 0; }
+      header .cabecalho figure img {
+        width: 80%; }
+    header .cabecalho .info h2, header .cabecalho .info h3 {
+      font-size: 25px;
+      margin: 0; }
+  header h1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 50px 0; }
+
+#ModalPaciente {
+  max-width: none !important; }
+
+form fieldset {
+  margin-bottom: 25px; }
+  form fieldset legend {
+    font-weight: bold;
+    text-transform: uppercase; }
+  form fieldset.sexo {
+    margin: 0; }
+    form fieldset.sexo legend {
+      font-weight: 300;
+      font-size: 14px; }
+    form fieldset.sexo #masc {
+      margin-right: 25px; }
+
+form label {
+  font-weight: 300;
+  font-size: 14px; }
+
+form #medicamentos #tabela-medicamentos, form #medicamentos #tabela-reacao {
+  margin-top: 25px;
+  margin-bottom: 50px; }
+  form #medicamentos #tabela-medicamentos p b, form #medicamentos #tabela-reacao p b {
+    font-size: 18px; }
+  form #medicamentos #tabela-medicamentos table thead tr, form #medicamentos #tabela-reacao table thead tr {
+    color: #fff; }
+    form #medicamentos #tabela-medicamentos table thead tr th, form #medicamentos #tabela-reacao table thead tr th {
+      width: auto; }
+  form #medicamentos #tabela-medicamentos table tbody tr td input, form #medicamentos #tabela-reacao table tbody tr td input {
+    width: 100%; }
+
+form #medicamentos #tabela-reacao tbody tr, form #medicamentos #tabela-reacao thead tr {
+  text-align: right; }
+  form #medicamentos #tabela-reacao tbody tr th:first-child, form #medicamentos #tabela-reacao tbody tr td:first-child, form #medicamentos #tabela-reacao thead tr th:first-child, form #medicamentos #tabela-reacao thead tr td:first-child {
+    text-align: left; }
+
+form #doencas-concomitantes .form-row {
+  border: 1px solid #000;
+  justify-content: space-between;
+  padding: 0 25px; }
+  form #doencas-concomitantes .form-row .form-group, form #doencas-concomitantes .form-row label {
+    margin-bottom: 0; }
+  form #doencas-concomitantes .form-row .form-group label {
+    padding: 20px 0;
+    font-size: 18px;
+    font-weight: 400; }
+
+form .button-group {
+  float: right;
+  margin-bottom: 50px; }

@@ -1,7 +1,17 @@
 import React from 'react';
+import VisualizarPaciente from './VisualizarPaciente';
+import firebase from '../../../Database/connection';
+const excluirAtendimento = (key) => {
+  if(window.confirm("Você realmente deseja excluir este item?")){
+    firebase.firestore().collection('pacientes').doc(key).delete().then(
+      alert("Exclusão realizada com sucesso!")
+    )
+  }
+}
+
+    
 
 const listaPacientes = ({lista}) => {
-
   return(
     <table className="table table-striped">
       <thead>
@@ -22,8 +32,8 @@ const listaPacientes = ({lista}) => {
               <td>{paciente.dosagem}</td>
               <td>{paciente.nomeNotificador}</td>
               <td>{paciente.dataNotificacao}</td>
-              <td><button>Visualizar</button></td>
-              <td><button>Excluir</button></td>
+              <td><VisualizarPaciente parametro={paciente.id}/></td>
+              <td><button className="btn btn-danger" onClick={() => excluirAtendimento(paciente.id)}>Excluir</button></td>
             </tr>
           )
         }

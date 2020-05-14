@@ -4,6 +4,8 @@ import AddPaciente from './Components/AddPaciente'
 import ListaPacientes from './Components/ListaPacientes';
 import firebase from '../../Database/connection';
 
+import './Components/index.css';
+
 export default class Notificacoes extends React.Component{
 
   constructor(props){
@@ -83,22 +85,36 @@ export default class Notificacoes extends React.Component{
     else this.teste();
 
     return(
-      <Container>
- <Row className="my-5 align-items-center">
-          <Col xs={9}>
-            <h2>Seja bem vindo! {this.state.nomeNotificador}</h2>
+      <div>
+      <Container className='topo'>
+        <Row className="mt-3 mb-1 align-items-center">
+          <Col className="titulo" xs={9}>
+            <h4>Seja bem vindo!</h4>
+            <h2>{this.state.nomeNotificador}</h2>
             <p>{this.state.categoriaProfissional}</p>
+            
+          </Col>
+          <Col xs={3} className="text-right">
+             <button className="btn btn-danger" onClick={this.signOut}>Sair do sistema</button>
+          </Col>
+        </Row>
+        <Row className="mt-1 align-items-center">
+          <Col xs={9}>
+            
             <h1>Lista de pacientes cadastrados</h1>
           </Col>
           <Col xs={3} className="text-right">
              <AddPaciente className="atendimentoComponent"/>
-             <button onClick={this.signOut}>Sair do sistema</button>
+             
           </Col>
         </Row>
+      </Container>
+      <Container>
         <Row>
           <ListaPacientes lista={this.state.pacientes} />
         </Row>
-    </Container>
+      </Container>
+      </div>
     );
   }
 }

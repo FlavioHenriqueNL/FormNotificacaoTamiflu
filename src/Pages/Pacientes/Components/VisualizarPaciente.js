@@ -28,7 +28,8 @@ export default class VisualizarPaciente extends React.Component{
       hematopatico: false,
       tabagista: false,
       nomeNotificador: '',
-      categoriaProfissional:''
+      categoriaProfissional:'',
+      dataNotificacao:''
     }
     this.mostrarModal = this.mostrarModal.bind(this);
     this.esconderModal = this.esconderModal.bind(this);
@@ -74,7 +75,8 @@ export default class VisualizarPaciente extends React.Component{
             s.diabetico = snap.data().diabetico;
             s.nefropata = snap.data().nefropata;
             s.hempatopatico = snap.data().hematopatico;
-            s.tabagista = snap.data().tabagista;  
+            s.tabagista = snap.data().tabagista;
+            s.dataNotificacao = snap.data().dataNotificacao;  
             this.setState(s);
         }else{
             console.log("Error.");
@@ -233,10 +235,32 @@ export default class VisualizarPaciente extends React.Component{
                     </div>
                 </fieldset>
 
+                <fieldset>
+                    <legend>Notificador</legend>
+                    <div className="form-row">
+                        <div className="form-group col">
+                            <label htmlFor="notificador">Notificador</label>
+                            <input className="form-control" type="text" id="notificador" value={this.state.nomeNotificador}/>
+                        </div>
+                        <div className="form-group col">
+                            <label htmlFor="categoriaprofissional">Categoria Profissional</label>
+                            <input className="form-control" type="text" id="notificador" value={this.state.categoriaProfissional}/>
+                        </div>
+                        <div className="form-group col">
+                            <label htmlFor="datacriacao">Data</label>
+                            <input className="form-control" type="text" id="notificador" value={this.state.dataNotificacao}/>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
                 <div className="button-group">
                     <Button className="btn btn-danger" onClick={this.esconderModal}><i className="fas fa-times-circle"></i> Fechar</Button>
                     <Button className="btn btn-success" onClick={(e) => {e.preventDefault(); window.print()}} type="submit"><i className="fas fa-save"></i> Imprimir</Button>
                 </div>
+
+
             </div>
         </form>
 

@@ -13,7 +13,7 @@ const excluirAtendimento = (key) => {
 
 const listaPacientes = ({lista}) => {
   return(
-    <table className="table table-striped">
+    <table className="table table-striped table-responsive">
       <thead>
           <tr className="bg-info">
               <th>Nome do Paciente</th>

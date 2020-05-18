@@ -22,66 +22,70 @@ export default class VisualizarPaciente extends React.Component{
       dosagem: '',
       outrosMedicamentos: [],
       reacoes: [],
+      nomeNotificador: '',
+      categoriaProfissional:'',
+      dataNotificacao:'',
       hipertenso: false,
       diabetico: false,
       nefropata: false,
-      hematopatico: false,
-      tabagista: false,
-      nomeNotificador: '',
-      categoriaProfissional:'',
-      dataNotificacao:''
+      hempatopatico: false,
+      tabagista: false
     }
-    this.mostrarModal = this.mostrarModal.bind(this);
-    this.esconderModal = this.esconderModal.bind(this);
-  }
+
     
 
+    
+    this.mostrarModal = this.mostrarModal.bind(this);
+    this.esconderModal = this.esconderModal.bind(this);
+}
 
-  mostrarModal(){
+
+
+mostrarModal(){
     let s = this.state;
     s.showModal = true;
     this.setState(s);
     
-  }
-  esconderModal(){
+}
+esconderModal(){
     let s = this.state;
     s.showModal = false;
     this.setState(s);
-  }
+}
 
   
-  
 
 
-  render(){
+
+render(){
     firebase.firestore().collection('pacientes').doc(this.props.parametro).get().then(
-      snap =>{
-        if(snap.exists){
-            let s = this.state;
-            s.nomeNotificador = snap.data().nomeNotificador;
-            s.categoriaProfissional = snap.data().CategoriaProfissional;
-            s.nome = snap.data().nome;
-            s.sexo = snap.data().sexo;
-            s.endereco = snap.data().endereco;
-            s.dataNascimento = snap.data().dataNascimento;
-            s.diagnostico = snap.data().diagnostico;
-            s.tempoGestacao = snap.data().tempoGestacao;
-            s.telefone = snap.data().telefone;
-            s.ubs = snap.data().ubs;
-            s.dosagem = snap.data().dosagem;
-            s.outrosMedicamentos = snap.data().outrosMedicamentos;
-            s.reacoes = snap.data().reacoes;
-            s.hipertenso = snap.data().hipertenso;
-            s.diabetico = snap.data().diabetico;
-            s.nefropata = snap.data().nefropata;
-            s.hempatopatico = snap.data().hematopatico;
-            s.tabagista = snap.data().tabagista;
-            s.dataNotificacao = snap.data().dataNotificacao;  
-            this.setState(s);
-        }else{
-            console.log("Error.");
+        snap =>{
+          if(snap.exists){
+              let s = this.state;
+              s.nomeNotificador = snap.data().nomeNotificador;
+              s.categoriaProfissional = snap.data().CategoriaProfissional;
+              s.nome = snap.data().nome;
+              s.sexo = snap.data().sexo;
+              s.endereco = snap.data().endereco;
+              s.dataNascimento = snap.data().dataNascimento;
+              s.diagnostico = snap.data().diagnostico;
+              s.tempoGestacao = snap.data().tempoGestacao;
+              s.telefone = snap.data().telefone;
+              s.ubs = snap.data().ubs;
+              s.dosagem = snap.data().dosagem;
+              s.outrosMedicamentos = snap.data().outrosMedicamentos;
+              s.reacoes = snap.data().reacoes;
+              s.hipertenso = snap.data().hipertenso;
+              s.diabetico = snap.data().diabetico;
+              s.nefropata = snap.data().nefropata;
+              s.hempatopatico = snap.data().hempatopatico;
+              s.tabagista = snap.data().tabagista;
+              s.dataNotificacao = snap.data().dataNotificacao;  
+              this.setState(s);
+          }else{
+              console.log("Error.");
+          }
         }
-      }
     );
     return(
      <>
@@ -226,7 +230,7 @@ export default class VisualizarPaciente extends React.Component{
                         </div>
                         <div className="form-group">
                             <label htmlFor="hepatopatias">Hepatopatias</label>
-                            <input type="checkbox" id="hepatopatias" checked={this.state.hematopatico} value="Hepatopatias" />
+                            <input type="checkbox" id="hepatopatias" checked={this.state.hempatopatico} value="Hepatopatias" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="tabagista">Tabagista</label>

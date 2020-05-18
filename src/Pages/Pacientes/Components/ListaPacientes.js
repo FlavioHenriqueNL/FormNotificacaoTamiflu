@@ -1,5 +1,6 @@
 import React from 'react';
 import VisualizarPaciente from './VisualizarPaciente';
+import EditarPaciente from './EditarPaciente';
 import firebase from '../../../Database/connection';
 const excluirAtendimento = (key) => {
   if(window.confirm("Você realmente deseja excluir este item?")){
@@ -20,6 +21,7 @@ const listaPacientes = ({lista}) => {
               <th>Medicamento</th>
               <th>Notificador</th>
               <th>Data Notificação</th>
+              <th>Editar</th>
               <th>Visualizar</th>
               <th>Excluir</th>
           </tr>
@@ -32,6 +34,7 @@ const listaPacientes = ({lista}) => {
               <td>{paciente.dosagem}</td>
               <td>{paciente.nomeNotificador}</td>
               <td>{paciente.dataNotificacao}</td>
+              <td><EditarPaciente parametro={paciente.id}/></td>
               <td><VisualizarPaciente parametro={paciente.id}/></td>
               <td><button className="btn btn-danger" onClick={() => excluirAtendimento(paciente.id)}>Excluir</button></td>
             </tr>

@@ -33,67 +33,71 @@ export default class AddPaciente extends React.Component{
       categoriaProfissional:''
     }
 
+    firebase.firestore().collection('pacientes').doc(this.props.parametro).get().then(
+      snap =>{
+        if(snap.exists){
+            let s = this.state;
+            s.nomeNotificador = snap.data().nomeNotificador;
+            s.categoriaProfissional = snap.data().CategoriaProfissional;
+            s.nome = snap.data().nome;
+            s.sexo = snap.data().sexo;
+            s.endereco = snap.data().endereco;
+            s.dataNascimento = snap.data().dataNascimento;
+            s.diagnostico = snap.data().diagnostico;
+            s.tempoGestacao = snap.data().tempoGestacao;
+            s.telefone = snap.data().telefone;
+            s.ubs = snap.data().ubs;
+            s.dosagem = snap.data().dosagem;
+            s.outrosMedicamentos = snap.data().outrosMedicamentos;
+            s.reacoes = snap.data().reacoes;
+            s.hipertenso = snap.data().hipertenso;
+            s.diabetico = snap.data().diabetico;
+            s.nefropata = snap.data().nefropata;
+            s.hempatopatico = snap.data().hempatopatico;
+            s.tabagista = snap.data().tabagista;
+            s.dataNotificacao = snap.data().dataNotificacao;  
+            this.setState(s);
+        }else{
+            console.log("Error.");
+        }
+      }
+    );
+
     this.mostrarModal = this.mostrarModal.bind(this);
     this.esconderModal = this.esconderModal.bind(this);
     this.addMedicamento = this.addMedicamento.bind(this);
     this.removeMedicamento = this.removeMedicamento.bind(this);
     this.salvar = this.salvar.bind(this);
-    
-    console.log(this.state.nomeNotificador);
-    console.log(this.state.categoriaProfissional);
-
   }
-
-    componentDidMount(){
-        firebase.auth().onAuthStateChanged((logged) => {
-            if(logged){
-                firebase.firestore().collection("usuarios").doc(logged.uid).get().then(
-                    
-                    snap =>{
-                        if(snap.exists){
-                            let s = this.state;
-                            s.nomeNotificador = snap.data().Nome;
-                            s.categoriaProfissional = snap.data().CategoriaProfissional;
-                            this.setState(s);
-                        }else{
-                            console.log("Error.");
-                        }
-                    }
-                )
-            }
-        })
-    }
-
   salvar(e){
-
-      e.preventDefault();
-      firebase.firestore().collection('pacientes').add(
-         {
-            nome: this.state.nome,
-            sexo: this.state.sexo,
-            endereco: this.state.endereco,
-            dataNascimento: this.state.dataNascimento,
-            diagnostico: this.state.diagnostico,
-            tempoGestacao: this.state.tempoGestacao,
-            telefone: this.state.telefone,
-            ubs: this.state.ubs,
-            dosagem: this.state.dosagem,
-            outrosMedicamentos: this.state.outrosMedicamentos,
-            reacoes: this.state.reacoes,
-            hipertenso: this.state.hipertenso,
-            diabetico: this.state.diabetico,
-            nefropata: this.state.nefropata,
-            hempatopatico: this.state.hempatopatico,
-            tabagista: this.state.tabagista,
-            uidNotificador: firebase.auth().currentUser.uid,
-            nomeNotificador: this.state.nomeNotificador,
-            CategoriaProfissional: this.state.categoriaProfissional,
-            dataNotificacao: moment().format('DD[/]MM[/]YYYY')
-         }
-      ).then(()=>{
-          alert("Paciente cadastrado com sucesso.");
-          this.esconderModal();
-      });
+    e.preventDefault();
+    firebase.firestore().collection('pacientes').doc(this.props.parametro).update(
+      {
+        nome: this.state.nome,
+        sexo: this.state.sexo,
+        endereco: this.state.endereco,
+        dataNascimento: this.state.dataNascimento,
+        diagnostico: this.state.diagnostico,
+        tempoGestacao: this.state.tempoGestacao,
+        telefone: this.state.telefone,
+        ubs: this.state.ubs,
+        dosagem: this.state.dosagem,
+        outrosMedicamentos: this.state.outrosMedicamentos,
+        reacoes: this.state.reacoes,
+        hipertenso: this.state.hipertenso,
+        diabetico: this.state.diabetico,
+        nefropata: this.state.nefropata,
+        hempatopatico: this.state.hempatopatico,
+        tabagista: this.state.tabagista,
+        uidNotificador: firebase.auth().currentUser.uid,
+        nomeNotificador: this.state.nomeNotificador,
+        CategoriaProfissional: this.state.categoriaProfissional,
+        dataNotificacao: moment().format('DD[/]MM[/]YYYY')
+      }
+    ).then(()=>{
+        alert("Informações atualizadas com sucesso!");
+        this.esconderModal();
+    });
   }
 
   mostrarModal(){
@@ -104,9 +108,6 @@ export default class AddPaciente extends React.Component{
   }
   esconderModal(){
     let s = this.state;
-    for (var prop in s){
-        if(Array.isArray(s[prop])) s[prop] = []
-    }
     s.showModal = false;
     this.setState(s);
   }
@@ -153,7 +154,7 @@ export default class AddPaciente extends React.Component{
   render(){
     return(
      <>
-      <Button variant="primary" onClick={this.mostrarModal}>Adicionar Paciente</Button>
+      <Button variant="primary" onClick={this.mostrarModal}>Editar</Button>
 
       <Modal show={this.state.showModal} onHide={this.esconderModal} id="ModalPaciente">
         <Modal.Header closeButton></Modal.Header>
@@ -181,44 +182,44 @@ export default class AddPaciente extends React.Component{
                     <div className="form-row align-items-center justify-content-center">
                         <div className="form-group col">
                             <label htmlFor="nome">Nome</label>
-                            <input type="text" className="form-control" id="nome" placeholder="Nome do Paciente" onChange={e =>this.setState({nome: e.target.value})}/>
+                            <input type="text" className="form-control" id="nome" placeholder="Nome do Paciente" defaultValue={this.state.nome} onChange={e =>this.setState({nome: e.target.value})}/>
                         </div>
                         <div className="form-group col-auto">
                             <fieldset className="sexo">
                                 <legend>Sexo</legend>
                                 <label htmlFor="masc">Masculino</label>
-                                <input type="radio" name="sexo" id="masc" onChange={e => this.setState({sexo: 'Masculino'})}/>
+                                <input type="radio" name="sexo" id="masc" defaultChecked={this.state.sexo === 'Masculino'} onChange={e => this.setState({sexo: 'Masculino'})}/>
                                 <label htmlFor="fem">Feminino</label>
-                                <input type="radio" name="sexo" id="fem" onChange={e => this.setState({sexo: 'Feminino'})}/>
+                                <input type="radio" name="sexo" id="fem" defaultChecked={this.state.sexo === 'Feminino'} onChange={e => this.setState({sexo: 'Feminino'})}/>
                             </fieldset>
                         </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="endereco">Endereço</label>
-                        <input type="text" className="form-control" name="" id="endereco" placeholder="Endereço" onChange={e =>this.setState({endereco: e.target.value})}/>
+                        <input type="text" className="form-control" name="" id="endereco" placeholder="Endereço" defaultValue={this.state.endereco} onChange={e =>this.setState({endereco: e.target.value})}/>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-4">
                             <label htmlFor="nascimento">Nascimento</label>
-                            <input type="date" className="form-control" name="" id="nascimento" placeholder="Data de Nascimento" onChange={e =>this.setState({dataNascimento: e.target.value})}/>
+                            <input type="date" className="form-control" name="" id="nascimento" placeholder="Data de Nascimento" defaultValue={this.state.dataNascimento} onChange={e =>this.setState({dataNascimento: e.target.value})}/>
                         </div>
                         <div className="form-group col-4">
                             <label htmlFor="telefone">Telefone</label>
-                            <input type="text" className="form-control" name="" id="telefone" placeholder="Telefone: (xx)9xxxx-xxxx" onChange={e =>this.setState({telefone: e.target.value})}/>
+                            <input type="text" className="form-control" name="" id="telefone" placeholder="Telefone: (xx)9xxxx-xxxx" defaultValue={this.state.telefone} onChange={e =>this.setState({telefone: e.target.value})}/>
                         </div>
                         <div className="form-group col-4">
                             <label htmlFor="ubs">UBS de referência</label>
-                            <input type="text" className="form-control" name="" id="UBS" placeholder="UBS de Referência" onChange={e =>this.setState({ubs: e.target.value})}/>
+                            <input type="text" className="form-control" name="" id="UBS" placeholder="UBS de Referência" defaultValue={this.state.ubs} onChange={e =>this.setState({ubs: e.target.value})}/>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-6">
                             <label htmlFor="gestacao">Em caso de gravidez, indicar o tempo de gestação</label>
-                            <input type="text" className="form-control" name="" id="gestacao" placeholder="Tempo de gestação" onChange={e =>this.setState({tempoGestacao: e.target.value})}disabled={this.state.sexo === "Masculino" ? true:false}/>
+                            <input type="text" className="form-control" name="" id="gestacao" placeholder="Tempo de gestação" defaultValue={this.state.tempoGestacao} onChange={e =>this.setState({tempoGestacao: e.target.value})}disabled={this.state.sexo === "Masculino" ? true:false}/>
                         </div>
                         <div className="form-group col-6">
                             <label htmlFor="diagnostico">Diagnóstico</label>
-                            <input type="text" className="form-control disabled" name="" id="" placeholder="Diagnóstico Principal" onChange={e =>this.setState({diagnostico: e.target.value})}/> 
+                            <input type="text" className="form-control disabled" name="" id="" placeholder="Diagnóstico Principal" defaultValue={this.state.diagnostico} onChange={e =>this.setState({diagnostico: e.target.value})}/> 
                         </div>
                     </div>
                     
@@ -229,7 +230,7 @@ export default class AddPaciente extends React.Component{
                     <div className="form-row">
                         <div className="form-group col-6">
                             <label htmlFor="dosagens">Dosagens</label>
-                            <select className="form-control" onChange={e => e.target.value !== "none" ? this.setState({dosagem: e.target.value, dosagemOption:true}):this.setState({dosagemOption:false})} disabled={this.state.dosagemInput}>
+                            <select className="form-control" defaultValue={this.state.dosagem} onChange={e => e.target.value !== "none" ? this.setState({dosagem: e.target.value, dosagemOption:true}):this.setState({dosagemOption:false})} disabled={this.state.dosagemInput}>
                                 <option value="none" defaultValue>Selecione uma dosagem ou  ...</option>
                                 <option value="Oseltamivir 75mg / 1 cápsula de 12 em 12 horas por 5 dias">Oseltamivir 75mg / 1 cápsula de 12 em 12 horas por 5 dias</option>
                                 <option value="Oseltamivir 45mg / 1 cápsula de 12 em 12 horas por 5 dias">Oseltamivir 45mg / 1 cápsula de 12 em 12 horas por 5 dias</option>
@@ -238,7 +239,7 @@ export default class AddPaciente extends React.Component{
                         </div>
                         <div className="form-group col-6">
                             <label htmlFor="outraDosagem">Outras dosagens</label>
-                            <input type="text" className="form-control" name="" id="outraDosagem" placeholder="... digite a dosagem." onChange={e =>(e.target.value !== "") ? this.setState({dosagem: e.target.value, dosagemInput: true}) : this.setState({ dosagemInput:false})} disabled={this.state.dosagemOption} />
+                            <input type="text" className="form-control" name="" id="outraDosagem" placeholder="... digite a dosagem." defaultValue={this.state.dosagem} onChange={e =>(e.target.value !== "") ? this.setState({dosagem: e.target.value, dosagemInput: true}) : this.setState({ dosagemInput:false})} disabled={this.state.dosagemOption} />
                         </div>
                     </div>
                     
@@ -305,30 +306,30 @@ export default class AddPaciente extends React.Component{
                     <div className="form-row">
                         <div className="form-group">
                             <label htmlFor="hipertenso">Hipertensão Arterial</label>
-                            <input type="checkbox" id="hipertenso" value="Hipertensão Arterial" onChange={(e) => this.setState({hipertenso: e.target.checked})} />
+                            <input type="checkbox" id="hipertenso" value="Hipertensão Arterial" defaultChecked={this.state.hipertenso} onChange={(e) => this.setState({hipertenso: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="diabetes">Diabetes</label>
-                            <input type="checkbox" id="diabetes" value="Diabetes" onChange={(e) => this.setState({diabetico: e.target.checked})}/>
+                            <input type="checkbox" id="diabetes" value="Diabetes" defaultChecked={this.state.diabetico} onChange={(e) => this.setState({diabetico: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="nefropatias">Nefropatias</label>
-                            <input type="checkbox" id="nefropatias" value="Nefropatias" onChange={(e) => this.setState({nefropata: e.target.checked})}/>
+                            <input type="checkbox" id="nefropatias" value="Nefropatias" defaultChecked={this.state.nefropata} onChange={(e) => this.setState({nefropata: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="hepatopatias">Hepatopatias</label>
-                            <input type="checkbox" id="hepatopatias" value="Hepatopatias" onChange={(e) => this.setState({hempatopatico: e.target.checked})}/>
+                            <input type="checkbox" id="hepatopatias" value="Hepatopatias" defaultChecked={this.state.hempatopatico} onChange={(e) => this.setState({hempatopatico: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tabagista">Tabagista</label>
-                            <input type="checkbox" id="tabagista" value="Tabagista" onChange={(e) => this.setState({tabagista: e.target.checked})}/>
+                            <input type="checkbox" id="tabagista" value="Tabagista" defaultChecked={this.state.tabagista} onChange={(e) => this.setState({tabagista: e.target.checked})}/>
                         </div>
                     </div>
                 </fieldset>
 
                 <div className="button-group">
                     <Button className="btn btn-danger" onClick={this.esconderModal}><i className="fas fa-times-circle"></i> Cancelar</Button>
-                    <Button className="btn btn-success" onClick={e => this.salvar(e)} type="submit"><i className="fas fa-save"></i> Salvar</Button>
+                    <Button className="btn btn-success" onClick={e => this.salvar(e)} type="submit"><i className="fas fa-save"></i> Atualizar</Button>
                 </div>
             </div>
         </form>

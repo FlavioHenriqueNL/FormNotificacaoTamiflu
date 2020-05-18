@@ -44,7 +44,8 @@ export default class Notificacoes extends React.Component{
   }
   
   teste = () =>{
-    firebase.firestore().collection("pacientes").where('nomeNotificador', '==', this.state.nomeNotificador).get().then(
+    let data = firebase.auth().currentUser.uid;
+    firebase.firestore().collection("pacientes").where('uidNotificador', '==', data).get().then(
       snap => {
         let s = this.state;
         s.pacientes = []

@@ -30,7 +30,7 @@ export default class AddPaciente extends React.Component{
       hematopatico: false,
       tabagista: false,
       nomeNotificador: '',
-      categoriaProfissional:'teste'
+      categoriaProfissional:''
     }
 
     this.mostrarModal = this.mostrarModal.bind(this);
@@ -83,7 +83,7 @@ export default class AddPaciente extends React.Component{
             hipertenso: this.state.hipertenso,
             diabetico: this.state.diabetico,
             nefropata: this.state.nefropata,
-            hempatopatico: this.state.hematopatico,
+            hematopatico: this.state.hematopatico,
             tabagista: this.state.tabagista,
             uidNotificador: firebase.auth().currentUser.uid,
             nomeNotificador: this.state.nomeNotificador,
@@ -123,7 +123,6 @@ export default class AddPaciente extends React.Component{
   }
   removeMedicamento(e, index){
     e.preventDefault();
-    alert(index);
     let s = this.state;
     let array = s.outrosMedicamentos;
     array.splice(index,1);
@@ -142,7 +141,6 @@ export default class AddPaciente extends React.Component{
   }
   removeReacao(e, index){
     e.preventDefault();
-    alert(index);
     let s = this.state;
     let array = s.reacoes;
     array.splice(index,1);
@@ -306,24 +304,24 @@ export default class AddPaciente extends React.Component{
                     <legend>Doenças Concomitantes</legend>
                     <div className="form-row">
                         <div className="form-group">
-                            <label htmlFor="hipertensao">Hipertensão Arterial</label>
-                            <input type="checkbox" id="hipertensao" value="Hipertensão Arterial" onChange={e => e.target.checked ? this.setState({hipertenso: true}) : this.setState({hipertenso: false})} />
+                            <label htmlFor="hipertenso">Hipertensão Arterial</label>
+                            <input type="checkbox" id="hipertenso" value="Hipertensão Arterial" onChange={(e) => this.setState({hipertenso: e.target.checked})} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="diabetes">Diabetes</label>
-                            <input type="checkbox" id="diabetes" value="Diabetes" onChange={e => e.target.checked ? this.setState({diabetico: true}) : this.setState({diabetico: false})} />
+                            <input type="checkbox" id="diabetes" value="Diabetes" onChange={(e) => this.setState({diabetico: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="nefropatias">Nefropatias</label>
-                            <input type="checkbox" id="nefropatias" value="Nefropatias" onChange={e => e.target.checked ? this.setState({nefropata: true}) : this.setState({nefropata: false})} />
+                            <input type="checkbox" id="nefropatias" value="Nefropatias" onChange={(e) => this.setState({nefropata: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="hepatopatias">Hepatopatias</label>
-                            <input type="checkbox" id="hepatopatias" value="Hepatopatias" onChange={e => e.target.checked ? this.setState({hempatopatico: true}) : this.setState({hempatopatico: false})} />
+                            <input type="checkbox" id="hepatopatias" value="Hepatopatias" onChange={(e) => this.setState({hepatopatico: e.target.checked})}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tabagista">Tabagista</label>
-                            <input type="checkbox" id="tabagista" value="Tabagista" onChange={e => e.target.checked ? this.setState({tabagista: true}) : this.setState({tabagista: false})} />
+                            <input type="checkbox" id="tabagista" value="Tabagista" onChange={(e) => this.setState({tabagista: e.target.checked})}/>
                         </div>
                     </div>
                 </fieldset>

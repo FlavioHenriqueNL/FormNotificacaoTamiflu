@@ -92,7 +92,6 @@ export default class AddPaciente extends React.Component{
         uidNotificador: firebase.auth().currentUser.uid,
         nomeNotificador: this.state.nomeNotificador,
         CategoriaProfissional: this.state.categoriaProfissional,
-        dataNotificacao: moment().format('DD[/]MM[/]YYYY')
       }
     ).then(()=>{
         alert("Informações atualizadas com sucesso!");

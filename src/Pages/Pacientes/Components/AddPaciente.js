@@ -27,7 +27,7 @@ export default class AddPaciente extends React.Component{
       hipertenso: false,
       diabetico: false,
       nefropata: false,
-      hematopatico: false,
+      hempatopatico: false,
       tabagista: false,
       nomeNotificador: '',
       categoriaProfissional:''

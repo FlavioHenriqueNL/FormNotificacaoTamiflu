@@ -12,7 +12,6 @@ export default class AddPaciente extends React.Component{
     super(props);
     this.state = {
       showModal: false,
-
       nome: '',
       sexo: '',
       endereco: '',
